@@ -132,8 +132,9 @@ function Stuff() {
                 https://en.wikipedia.org/wiki/Graham_scan
               </a>
             </p>
+            <br />
             <p>
-              Based on the explanation from
+              Based on the explanation from{" "}
               <a
                 href="http://shop.oreilly.com/product/0636920032885.do"
                 target="_blank"
@@ -142,6 +143,7 @@ function Stuff() {
                 Algorithms in a Nutshell, 2nd Edition{" "}
               </a>
             </p>
+            <br />
             <p>
               Code written by me (Roberto Serra);{" "}
               <a
