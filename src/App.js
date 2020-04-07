@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Home from "./Home.js";
 import Stuff from "./Stuff.js";
+import Graham from "./Graham.js";
 import "./App.css";
 
 const Navbar = () => (
@@ -13,13 +14,11 @@ const Navbar = () => (
       </Link>
       <div className="d-flex justify-content-end" id="navbar">
         <Link className="nav-item nav-link active" to="/">
-          Home <span className="sr-only">(current)</span>
+          Home
         </Link>
-        {/*
         <Link className="nav-item nav-link" to="/stuff">
           Stuff
-          </Link>
-         */}
+        </Link>
       </div>
     </nav>
   </div>
@@ -34,8 +33,11 @@ const App = () => (
 
       <main role="main" className="container main-content">
         <Switch>
-          <Route path="/stuff">
+          <Route exact path="/stuff">
             <Stuff />
+          </Route>
+          <Route path="/stuff/graham-scan">
+            <Graham />
           </Route>
           <Route path="/">
             <Home />
