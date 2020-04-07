@@ -45,7 +45,11 @@ const App = () => (
     </Router>
     <footer className="footer">
       <div className="container text-center">
-        <a href="https://github.com/obiSerra/rserra.it" target="_blank">
+        <a
+          href="https://github.com/obiSerra/rserra.it"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Source for this website
         </a>
       </div>
