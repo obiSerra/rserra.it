@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Stuff = () => (
   <div className="text-center">
@@ -8,7 +8,7 @@ const Stuff = () => (
     <div className="m-3">
       <ul className="list-unstyled">
         <li>
-          <Link to="/stuff/graham-scan">Graham's scan</Link>
+          <Link to="/stuff/graham-scan">Graham's scan foo</Link>
         </li>
       </ul>
     </div>
