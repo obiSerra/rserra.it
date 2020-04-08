@@ -53,19 +53,21 @@ function isTurnLeft(p1, p2, p3) {
 
 function grahamScan(points) {
   // Let's deep clone the point list
-  let pts = JSON.parse(JSON.stringify(points));
+  const pts = points.map(x => JSON.parse(JSON.stringify(x)));
+  console.log("pts", JSON.stringify(pts));
   // Find the point with the lowest y
   let low = pts.reduce((acc, v) => (v.y < acc.y ? v : acc));
-  // and remove it from the point list
-  pts = pts.filter(p => p.x !== low.x && p.y !== low.y);
-  // Order the remaining points based on their polar angle
-  let ordered = pts
+
+  let ordered = points
     .map(p => {
       p.angle = polarAngle(low, p);
       return p;
     })
-    .sort((p1, p2) => p1.angle < p2.angle);
-
+    .sort((p1, p2) => p2.angle - p1.angle);
+  // and remove it from the point list
+  //const pts = pts.filter(p => p.x !== low.x && p.y !== low.y);
+  // Order the remaining points based on their polar angle
+  console.log("ordered", JSON.stringify(ordered), ordered);
   let hull = [ordered[ordered.length - 1], low];
 
   for (let i = 0; i < ordered.length; i++) {
