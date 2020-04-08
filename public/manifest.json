@@ -21,8 +21,7 @@
       "src": "favicon-96x96.png",
       "type": "image/png",
       "sizes": "96x96"
-    },
-
+    }
   ],
   "start_url": ".",
   "display": "standalone",
