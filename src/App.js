@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./Home.js";
 import Stuff from "./Stuff.js";
 import Graham from "./Graham.js";
-import "./App.css";
+import "./App.scss";
 
 const Navbar = () => (
   <div className="bg-dark">
