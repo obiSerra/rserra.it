@@ -1,5 +1,17 @@
+a {
+    color: tomato;
+
+    &:hover{
+        color: #d0513a;
+    }
+}
 
 
+
+nav{
+
+
+}
 .main-content {
     margin: 5em auto;
     min-height: calc(100vh - 160px - 40px - 60px );
