@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import { pages, stuff, posts } from "./pages-list.js";
+import { pages, stuff, posts, unlisted, home } from "./pages-list.js";
 
 import "./App.scss";
 
@@ -35,7 +35,7 @@ const App = () => (
 
       <main role="main" className="container main-content">
         <Switch>
-          {[...posts, ...stuff, ...pages].map(x => (
+          {[...posts, ...stuff, ...pages, ...unlisted, home].map(x => (
             <Route key={x.path} path={x.path}>
               {x.component}
             </Route>

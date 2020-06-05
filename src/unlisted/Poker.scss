@@ -1,0 +1,19 @@
+@import "../variables";
+
+.calculator {
+    margin-top: 50px;
+ }
+.result-area {
+    margin-top: 50px;
+    border-top: 1px solid $main;
+    padding-top: 50px;
+
+    .result-value {
+        font-weight: bold;
+        color: $main;
+    }
+    .result-formula {
+        font-style: italic;
+        font-size: 0.8em;
+    }
+}
