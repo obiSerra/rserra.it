@@ -1,16 +1,15 @@
-import { simulationParams } from "./params";
-
 export class Boid {
-  constructor(x, y, deltaX, deltaY, maxAllowedDelta, color = "black", debug = false, group = "a") {
+  constructor(x, y, deltaX, deltaY, params, color = "black", group = "a", isFirst = false) {
     this.id = Math.random() * 100000;
     this.x = x;
     this.y = y;
-    this.deltaX = Math.min(deltaX, maxAllowedDelta);
-    this.deltaY = Math.min(deltaY, maxAllowedDelta);
-    this.maxAllowedDelta = maxAllowedDelta;
+    this.deltaX = Math.min(deltaX, params.maxAllowedSpeed);
+    this.deltaY = Math.min(deltaY, params.maxAllowedSpeed);
+    this.maxAllowedDelta = params.maxAllowedSpeed;
     this.color = color;
-    this.debug = debug;
+    this.params = params;
     this.group = group;
+    this.isFirst = isFirst;
   }
 
   updateDeltaX(deltaX) {
@@ -39,18 +38,17 @@ export class Boid {
     ctx.fill();
     ctx.stroke();
 
-
-    if (this.debug) {
+    if (this.params.debug && (this.params.debugAll || this.isFirst)) {
       ctx.beginPath();
       ctx.setLineDash([10, 10]);
       ctx.strokeStyle = this.color;
-      ctx.arc(this.x, this.y, simulationParams.cohesionRange, 0, 2 * Math.PI);
+      ctx.arc(this.x, this.y, this.params.cohesionRange, 0, 2 * Math.PI);
       ctx.stroke();
 
       ctx.beginPath();
       ctx.setLineDash([2, 5]);
       ctx.strokeStyle = this.color;
-      ctx.arc(this.x, this.y, simulationParams.separationRange, 0, 2 * Math.PI);
+      ctx.arc(this.x, this.y, this.params.separationRange, 0, 2 * Math.PI);
       ctx.stroke();
     }
   }
@@ -58,18 +56,17 @@ export class Boid {
 
 const randomDirection = () => (Math.ceil((Math.random() - 0.5) * 2) < 1 ? -1 : 1);
 
-export const generateBoids = (maxAllowedDelta, num, $canvas, color = "#000", group = "a") => {
+export const generateBoids = (params, num, $canvas, color = "#000", group = "a") => {
   const boids = [];
 
-  let debugMode = simulationParams.debug;
   for (let i = 0; i < num; i++) {
     const dX = Math.floor(Math.random() * 20) * randomDirection();
     const dY = Math.floor(Math.random() * 20) * randomDirection();
+
     const x = Math.floor(Math.random() * ($canvas.width - 20)) + 10;
     const y = Math.floor(Math.random() * ($canvas.height - 20)) + 10;
-    const boid = new Boid(x, y, dX, dY, maxAllowedDelta, color, debugMode, group);
+    const boid = new Boid(x, y, dX, dY, params, color, group, i === 0);
     boids.push(boid);
-    if (!simulationParams.debugAll) debugMode = false;
   }
   return boids;
 };

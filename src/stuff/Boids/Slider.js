@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { simulationParams } from "./params";
 
 export default function Slider(props) {
-  const { name, label, startVal = 50, minVal = 0, maxVal = 100 } = props;
+  const { name, label, startVal = 50, minVal = 0, maxVal = 100, onUpdate } = props;
 
   const [sliderValue, setSliderValue] = useState(parseInt(startVal));
 
   const onChange = e => {
     setSliderValue(parseInt(e.target.value, 10));
-    simulationParams[name] = sliderValue;
+    console.log(sliderValue);
+    onUpdate(sliderValue);
   };
 
   useEffect(() => {}, []);
@@ -48,8 +48,7 @@ export function Checkbox(props) {
 
   const onChange = e => {
     setCheckVal(e.target.checked);
-    simulationParams[name] = !checkVal;
-    onUpdate();
+    onUpdate(!checkVal);
   };
   return (
     <>

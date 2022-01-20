@@ -8,6 +8,10 @@
   right: 70vw;
   width: 250px;
 
+  &.right-col {
+    left: 70vw;
+  }
+
   .tool-panel {
     text-align: left;
     margin-bottom: 5px;
@@ -15,7 +19,6 @@
     padding-top: 10px;
     border-bottom: 1px solid #ccc;
     flex-wrap: wrap;
-
 
     .slider-value {
       margin-left: 20px;

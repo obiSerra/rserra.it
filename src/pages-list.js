@@ -11,7 +11,7 @@ import Poker from "./unlisted/Poker.js";
 
 // stuff imports
 import Graham from "./stuff/Graham.js";
-import Boids from "./stuff/Boids";
+import BoidsComponent from "./stuff/Boids";
 // posts imports
 import CljPython from "./posts/CljPython.js";
 
@@ -30,7 +30,7 @@ export const stuff = [
   {
     path: "/stuff/boids/",
     exact: false,
-    component: <Boids />,
+    component: <BoidsComponent />,
     title: "Boids"
   }
 ];

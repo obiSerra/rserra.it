@@ -1,12 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
 import { mainLoop } from "./stage";
-import { simulationParams } from "./params";
-import { generateBoids } from "./boids";
+import { generateBoids } from "./boid";
 import "./boids.scss";
+
+import { cohesion, separation, alignment, avoidBorders } from "./behavior";
 
 import Slider, { Checkbox, Number } from "./Slider";
 
-const render = ($canvas, ctx, boids) => {
+const render = ($canvas, ctx, boids, simulationParams) => {
   ctx.clearRect(0, 0, $canvas.width, $canvas.height);
 
   if (simulationParams.debug) {
@@ -22,95 +23,56 @@ const render = ($canvas, ctx, boids) => {
   }
 };
 
-const avoidBorders = ($canvas, boid) => {
-  if (boid.x < simulationParams.borderSize) {
-    boid.updateDeltaX(simulationParams.borderDirectionChange);
-  }
-  if (boid.x > $canvas.width - simulationParams.borderSize) {
-    boid.updateDeltaX(-simulationParams.borderDirectionChange);
-  }
-  if (boid.y < simulationParams.borderSize) {
-    boid.updateDeltaY(simulationParams.borderDirectionChange);
-  }
-  if (boid.y > $canvas.height - simulationParams.borderSize) {
-    boid.updateDeltaY(-simulationParams.borderDirectionChange);
-  }
-};
+const colors = ["white", "yellow", "lime", "purple"];
 
-const getDistance = (x, y, x1, y1) => Math.sqrt(Math.pow(Math.abs(x - x1), 2) + Math.pow(Math.abs(y - y1), 2));
-
-const cohesion = (flock, boid) => {
-  let avgPoint = [boid.x, boid.y];
-  for (let b of flock) {
-    if (b.id !== boid.id && b.group === boid.group) {
-      if (getDistance(b.x, b.y, boid.x, boid.y) < simulationParams.cohesionRange) {
-        avgPoint = [(avgPoint[0] + b.x) / 2, (avgPoint[1] + b.y) / 2];
-      }
-    }
-  }
-
-  if (avgPoint[0] > boid.x) boid.updateDeltaX(simulationParams.cohesionDirectionChange);
-  else if (avgPoint[0] < boid.x) boid.updateDeltaX(-simulationParams.cohesionDirectionChange);
-  if (avgPoint[1] > boid.y) boid.updateDeltaY(simulationParams.cohesionDirectionChange);
-  else if (avgPoint[1] < boid.y) boid.updateDeltaY(-simulationParams.cohesionDirectionChange);
-};
-
-const separation = (flock, boid) => {
-  let avgPoint = [boid.x, boid.y];
-  for (let b of flock) {
-    if (b.id !== boid.id) {
-      if (getDistance(b.x, b.y, boid.x, boid.y) < simulationParams.separationRange) {
-        avgPoint = [(avgPoint[0] + b.x) / 2, (avgPoint[1] + b.y) / 2];
-      }
-    }
-  }
-  if (avgPoint[0] > boid.x) boid.updateDeltaX(-simulationParams.separationDirectionChange);
-  else if (avgPoint[0] < boid.x) boid.updateDeltaX(simulationParams.separationDirectionChange);
-  if (avgPoint[1] > boid.y) boid.updateDeltaY(-simulationParams.separationDirectionChange);
-  else if (avgPoint[1] < boid.y) boid.updateDeltaY(simulationParams.separationDirectionChange);
-};
-
-const colors = [
-  'white',
-  'blue',
-  'lime',
-  'purple'
-];
-
-function Boids() {
+function BoidsComponent() {
   let boids = [];
   const cvsRef = useRef(null);
   const [group1Num, setGroup1Num] = useState(10);
-  const [group2Num, setGroup2Num] = useState(5);
-  const [group3Num, setGroup3Num] = useState(5);
-  const [group4Num, setGroup4Num] = useState(5);
+  const [group2Num, setGroup2Num] = useState(0);
+  const [group3Num, setGroup3Num] = useState(0);
+  const [group4Num, setGroup4Num] = useState(0);
+
+  const [params, setParams] = useState({
+    debug: true,
+    debugAll: false,
+    borderSize: 30,
+    borderDirectionChange: 3,
+    maxAllowedSpeed: 20,
+    cohesionRange: 100,
+    cohesionDirectionChange: 2,
+    separationRange: 20,
+    separationDirectionChange: 4,
+    alignmentRange: 50,
+    alignmentDirectionChange: 1,
+  });
 
   const startSimulation = () => {
     const $canvas = cvsRef.current;
     const ctx = $canvas.getContext("2d");
+    setParams(params)
 
-    boids = generateBoids(simulationParams.maxAllowedSpeed, group1Num, $canvas, colors[0], "a");
-    boids = [...boids, ...generateBoids(simulationParams.maxAllowedSpeed, group2Num, $canvas, colors[1], "b")];
-    boids = [...boids, ...generateBoids(simulationParams.maxAllowedSpeed, group3Num, $canvas, colors[2], "c")];
-    boids = [...boids, ...generateBoids(simulationParams.maxAllowedSpeed, group4Num, $canvas, colors[3], "c")];
-
-    console.log("boids", boids.length);
+    boids = generateBoids(params, group1Num, $canvas, colors[0], colors[0]);
+    boids = [...boids, ...generateBoids(params, group2Num, $canvas, colors[1], colors[1])];
+    boids = [...boids, ...generateBoids(params, group3Num, $canvas, colors[2], colors[2])];
+    boids = [...boids, ...generateBoids(params, group4Num, $canvas, colors[3], colors[3])];
 
     mainLoop(Math.random() * 10000, (delta, start, timestamp) => {
       for (let boid of boids) {
-        cohesion(boids, boid);
-        separation(boids, boid);
-        avoidBorders($canvas, boid);
+        separation(boids, boid, params);
+        cohesion(boids, boid, params);
+        alignment(boids, boid, params);
+        avoidBorders($canvas, boid, params);
         boid.move(delta);
       }
-      console.log("new loop id", boids.length);
 
-      render($canvas, ctx, boids);
+      render($canvas, ctx, boids, params);
     });
   };
 
   useEffect(() => {
     startSimulation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const makeLabel = color => (
@@ -125,7 +87,7 @@ function Boids() {
           borderRadius: 10,
           position: "relative",
           bottom: -5,
-          border: '1px solid #000'
+          border: "1px solid #000",
         }}
       ></span>
     </>
@@ -139,7 +101,7 @@ function Boids() {
           <div>
             <canvas width="600" height="600" ref={cvsRef} />
           </div>
-          <form className="boid-form d-flex flex-column p-3">
+          <form className="boid-form d-flex flex-column p-3 right-col">
             <div className="d-flex flex-row tool-panel">
               <Number name="group1" label={makeLabel(colors[0])} onUpdate={setGroup1Num} startVal={group1Num} />
               <Number name="group2" label={makeLabel(colors[1])} onUpdate={setGroup2Num} startVal={group2Num} />
@@ -147,45 +109,104 @@ function Boids() {
               <Number name="group4" label={makeLabel(colors[3])} onUpdate={setGroup4Num} startVal={group4Num} />
             </div>
             <div className="d-flex flex-column tool-panel">
+              <button type="button" className="btn btn-light" onClick={startSimulation}>
+                Regenerate
+              </button>
+            </div>
+          </form>
+          <form className="boid-form d-flex flex-column p-3">
+            <div className="d-flex flex-column tool-panel">
               <div className="d-flex flex-column">
-                <Slider name="borderSize" label="Border Size" />
+                <Slider
+                  name="borderSize"
+                  label="Border Size"
+                  startVal={params.borderSize}
+                  minVal="0"
+                  maxVal="100"
+                  onUpdate={value => (params["borderSize"] = value)}
+                />
                 <Slider
                   name="borderDirectionChange"
                   label="Border direction changes"
                   minVal="0"
                   maxVal="10"
-                  startVal="2"
+                  startVal={params.borderDirectionChange}
+                  onUpdate={value => (params["borderDirectionChange"] = value)}
                 />
               </div>
               <div className="d-flex flex-column">
-                <Slider name="cohesionRange" label="Cohesion range" />
+                <Slider
+                  name="cohesionRange"
+                  label="Cohesion range"
+                  minVal="0"
+                  maxVal="200"
+                  startVal={params.cohesionRange}
+                  onUpdate={value => (params["cohesionRange"] = value)}
+                />
                 <Slider
                   name="cohesionDirectionChange"
                   label="Cohesion direction changes"
                   minVal="0"
                   maxVal="10"
-                  startVal="2"
+                  startVal={params.cohesionDirectionChange}
+                  onUpdate={value => (params["separationRange"] = value)}
                 />
               </div>
               <div className="d-flex flex-column">
-                <Slider name="separationRange" label="Separation range" />
+                <Slider
+                  name="separationRange"
+                  label="Separation range"
+                  minVal="0"
+                  maxVal="200"
+                  startVal={params.separationRange}
+                  onUpdate={value => (params["separationRange"] = value)}
+                />
                 <Slider
                   name="separationDirectionChange"
                   label="Separation direction changes"
                   minVal="0"
                   maxVal="10"
-                  startVal="2"
+                  startVal={params.separationDirectionChange}
+                  onUpdate={value => (params["separationDirectionChange"] = value)}
                 />
               </div>
               <div className="d-flex flex-column">
-                <Checkbox name="debug" label="Debug Mode" onUpdate={startSimulation} />
-                <Checkbox name="debugAll" label="Debug All" onUpdate={startSimulation} />
+                <Slider
+                  name="alignmentRange"
+                  label="Alignment range"
+                  minVal="0"
+                  maxVal="200"
+                  startVal={params.alignmentRange}
+                  onUpdate={value => (params["alignmentRange"] = value)}
+                />
+                <Slider
+                  name="alignmentDirectionChange"
+                  label="Alignment direction changes"
+                  minVal="0"
+                  maxVal="10"
+                  startVal={params.alignmentDirectionChange}
+                  onUpdate={value => (params["alignmentDirectionChange"] = value)}
+                />
               </div>
-            </div>
-            <div className="d-flex flex-column tool-panel">
-              <button type="button" className="btn btn-light" onClick={startSimulation}>
-                Regenerate
-              </button>
+              <div className="d-flex flex-column">
+                <Checkbox
+                  name="debug"
+                  label="Debug Mode"
+                  startVal={params["debug"]}
+                  onUpdate={value => {
+                    params["debug"] = value;
+                  }}
+                />
+                <Checkbox
+                  name="debugAll"
+                  label="Debug All"
+                  startVal={params["debugAll"]}
+                  onUpdate={value => {
+                    params["debugAll"] = value;
+                  }}
+                  params={params}
+                />
+              </div>
             </div>
           </form>
         </div>
@@ -194,4 +215,4 @@ function Boids() {
   );
 }
 
-export default Boids;
+export default BoidsComponent;
