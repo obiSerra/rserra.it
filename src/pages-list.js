@@ -11,6 +11,7 @@ import Poker from "./unlisted/Poker.js";
 
 // stuff imports
 import Graham from "./stuff/Graham.js";
+import Boids from "./stuff/Boids";
 // posts imports
 import CljPython from "./posts/CljPython.js";
 
@@ -25,6 +26,12 @@ export const stuff = [
     exact: false,
     component: <Graham />,
     title: "Graham's scan"
+  },
+  {
+    path: "/stuff/boids/",
+    exact: false,
+    component: <Boids />,
+    title: "Boids"
   }
 ];
 
