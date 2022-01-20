@@ -6,9 +6,9 @@ export default function Slider(props) {
   const [sliderValue, setSliderValue] = useState(parseInt(startVal));
 
   const onChange = e => {
-    setSliderValue(parseInt(e.target.value, 10));
-    console.log(sliderValue);
-    onUpdate(sliderValue);
+    const val = parseInt(e.target.value, 10);
+    setSliderValue(val);
+    onUpdate(val);
   };
 
   useEffect(() => {}, []);
@@ -29,12 +29,14 @@ export default function Slider(props) {
         />
 
         <input
-          type="text"
+          type="number"
           id={`range_${name}_value`}
           value={sliderValue}
+          onChange={onChange}
           className="slider-value number-value"
-          readOnly="readonly"
           size="2"
+          min={minVal}
+          max={maxVal}
         />
       </div>
     </>

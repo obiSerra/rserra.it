@@ -3,7 +3,7 @@ import { mainLoop } from "./stage";
 import { generateBoids } from "./boid";
 import "./boids.scss";
 
-import { cohesion, separation, alignment, avoidBorders } from "./behavior";
+import { cohesion, separation, alignment, avoidBorders, getDistance } from "./behavior";
 
 import Slider, { Checkbox, Number } from "./Slider";
 
@@ -28,16 +28,16 @@ const colors = ["white", "yellow", "lime", "purple"];
 function BoidsComponent() {
   let boids = [];
   const cvsRef = useRef(null);
-  const [group1Num, setGroup1Num] = useState(10);
-  const [group2Num, setGroup2Num] = useState(0);
+  const [group1Num, setGroup1Num] = useState(30);
+  const [group2Num, setGroup2Num] = useState(30);
   const [group3Num, setGroup3Num] = useState(0);
   const [group4Num, setGroup4Num] = useState(0);
 
   const [params, setParams] = useState({
-    debug: true,
+    debug: false,
     debugAll: false,
     borderSize: 30,
-    borderDirectionChange: 3,
+    borderDirectionChange: 10,
     maxAllowedSpeed: 20,
     cohesionRange: 100,
     cohesionDirectionChange: 2,
@@ -50,7 +50,7 @@ function BoidsComponent() {
   const startSimulation = () => {
     const $canvas = cvsRef.current;
     const ctx = $canvas.getContext("2d");
-    setParams(params)
+    setParams(params);
 
     boids = generateBoids(params, group1Num, $canvas, colors[0], colors[0]);
     boids = [...boids, ...generateBoids(params, group2Num, $canvas, colors[1], colors[1])];
@@ -59,9 +59,16 @@ function BoidsComponent() {
 
     mainLoop(Math.random() * 10000, (delta, start, timestamp) => {
       for (let boid of boids) {
-        separation(boids, boid, params);
-        cohesion(boids, boid, params);
-        alignment(boids, boid, params);
+        const sortedOthers = boids
+          .filter(b => b.id !== boid.id)
+          .map(b => [getDistance(boid, b), b])
+          .sort((a, b) => a[0] - b[0]);
+
+        
+        
+        alignment(sortedOthers, boid, params);
+        cohesion(sortedOthers, boid, params);
+        separation(sortedOthers, boid, params);
         avoidBorders($canvas, boid, params);
         boid.move(delta);
       }
@@ -128,8 +135,8 @@ function BoidsComponent() {
                 <Slider
                   name="borderDirectionChange"
                   label="Border direction changes"
-                  minVal="0"
-                  maxVal="10"
+                  minVal={0}
+                  maxVal={10}
                   startVal={params.borderDirectionChange}
                   onUpdate={value => (params["borderDirectionChange"] = value)}
                 />
