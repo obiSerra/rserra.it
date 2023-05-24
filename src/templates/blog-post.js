@@ -1,9 +1,17 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
 
-import Bio from "../components/bio"
+import { ShortBio } from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import CollapseNote from "../components/CollapseNote"
+
+import rehypeReact from "rehype-react"
+
+const renderAst = new rehypeReact({
+  createElement: React.createElement,
+  components: { "collapse-note": CollapseNote },
+}).Compiler
 
 const BlogPostTemplate = ({
   data: { previous, next, site, markdownRemark: post },
@@ -22,13 +30,14 @@ const BlogPostTemplate = ({
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
           <p>{post.frontmatter.date}</p>
         </header>
-        <section
+        <section itemProp="articleBody">{renderAst(post.htmlAst)}</section>
+        {/* <section
           dangerouslySetInnerHTML={{ __html: post.html }}
           itemProp="articleBody"
-        />
+        /> */}
         <hr />
         <footer>
-          <Bio />
+          <ShortBio />
         </footer>
       </article>
       <nav className="blog-post-nav">
@@ -87,6 +96,7 @@ export const pageQuery = graphql`
       id
       excerpt(pruneLength: 160)
       html
+      htmlAst
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")

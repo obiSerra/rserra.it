@@ -19,6 +19,8 @@ const Layout = ({ location, title, children }) => {
 
   const author = data.site.siteMetadata?.author
   const social = data.site.siteMetadata?.social
+  // const author = "Roberto Serra"
+  // const social = "https://github.com/obiSerra"
 
   const rootPath = `${__PATH_PREFIX__}/`
   const isRootPath = location.pathname === rootPath

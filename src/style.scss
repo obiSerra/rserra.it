@@ -300,6 +300,25 @@ a:focus {
   border-radius: 100%;
 }
 
+.blog-post {
+  pre {
+    max-width: var(--maxWidth-wrapper);
+    overflow-x: scroll;
+    font-size: 0.8rem;
+    background: #f0f0f0;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+  }
+
+  ul {
+    
+    li{
+      margin-left: 19px;
+      margin-bottom: 0;
+    }
+  }
+}
+
 .blog-post header h1 {
   margin: var(--spacing-0) var(--spacing-0) var(--spacing-4) var(--spacing-0);
 }
@@ -330,10 +349,8 @@ a:focus {
   }
 }
 
-.bio {
-  .highlight {
-    color: tomato;
-  }
+.highlight {
+  color: tomato;
 }
 
 .collapse-note-outer {
@@ -353,12 +370,10 @@ a:focus {
     background: #f0f0f0;
     padding: 0.5rem 1rem;
     border: 1px solid #ccc;
-
     pre {
-      padding: 0 0 10px 0;
-      margin: 10px 0;
-      border-top: 1px dashed #ccc;
-      border-bottom: 1px dashed #ccc;
+      border: none;
+      padding: 0;
+      overflow-x: auto;
     }
   }
 }

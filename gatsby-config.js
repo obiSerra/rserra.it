@@ -12,7 +12,7 @@ module.exports = {
     title: `rserra.it`,
     author: {
       name: `Roberto Serra`,
-      summary: `I'm a senior software engineer, living in Turin.`,
+      summary: `Hi there! My name is Roberto and I am a Senior Software Engineer with over 10 years of experience.`,
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
     siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
@@ -121,6 +121,12 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
-    `gatsby-plugin-sass`
+    `gatsby-plugin-sass`,
+    {
+      resolve: "gatsby-transformer-remark",
+      options: {
+        plugins: ["gatsby-remark-component-parent2div"],
+      },
+    },
   ],
 }

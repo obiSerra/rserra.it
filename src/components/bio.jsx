@@ -130,22 +130,58 @@ const Bio = () => {
             github
           </a>
         </p>
-        <p>
+        <div>
           <br />
           <br />
           <small>
             ** Base description generated with <i>gpt-3.5-turbo</i> and a little
             bit of prompt engineering (chain-of-thoughts and some retries).
           </small>
-          <CollapseNote title="full prompt">
+          <CollapseNote open="full prompt" close="close prompt">
             <strong>Prompt</strong>
             <pre>{prompt}</pre>
             <strong>Completion</strong>
             <pre>{completion}</pre>
           </CollapseNote>
-        </p>
+        </div>
       </div>
     </div>
+  )
+}
+
+export const ShortBio = () => {
+  const data = useStaticQuery(graphql`
+    query BioQuery {
+      site {
+        siteMetadata {
+          author {
+            name
+            summary
+          }
+          social {
+            github
+          }
+        }
+      }
+    }
+  `)
+  const summary = data.site.siteMetadata?.author?.summary
+  return (
+    <>
+      <div className="bio">
+        <StaticImage
+          className="bio-avatar"
+          layout="fixed"
+          formats={["auto", "webp", "avif"]}
+          src="../images/avatar-face.png"
+          width={50}
+          height={50}
+          quality={95}
+          alt="Profile picture"
+        />
+        <p>{summary}</p>
+      </div>
+    </>
   )
 }
 
