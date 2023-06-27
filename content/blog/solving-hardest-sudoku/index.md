@@ -67,9 +67,6 @@ const solveWave = (board, invalid = {}, calls = []) => {
   const [cell, available] = possibility;
 
   if (available.length === 0) {
-    if (calls.length === 0) {
-      debugger;
-    }
     const [lastCell, lastValue] = calls.pop();
     board.board[lastCell[0]][lastCell[1]] = null;
     const hash = JSON.stringify(board.board) + `_${lastCell.join("-")}`;
