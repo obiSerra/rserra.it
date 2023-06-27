@@ -12,10 +12,10 @@ module.exports = {
     title: `rserra.it`,
     author: {
       name: `Roberto Serra`,
-      summary: `Hi there! My name is Roberto and I am a Senior Software Engineer with over 10 years of experience.`,
+      summary: `Hi there! My name is Roberto and I am a Senior Software Engineer with over 15 years of experience.`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    description: `Just my page.`,
+    siteUrl: `https://www.rserra.it/`,
     social: {
       github: `https://github.com/obiSerra`,
     },
@@ -26,14 +26,18 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/content/blog`,
-        name: `blog`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,
         path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/images/blog`,
       },
     },
     {
@@ -53,6 +57,7 @@ module.exports = {
             },
           },
           `gatsby-remark-prismjs`,
+          `gatsby-remark-component-parent2div`,
         ],
       },
     },
@@ -102,7 +107,7 @@ module.exports = {
               }
             }`,
             output: "/rss.xml",
-            title: "Gatsby Starter Blog RSS Feed",
+            title: "rserra.it Blog RSS Feed",
           },
         ],
       },
@@ -118,15 +123,15 @@ module.exports = {
         // https://css-tricks.com/meta-theme-color-and-trickery/
         // theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/avatar-face.png`, // This path is relative to the root of the site.
       },
     },
     `gatsby-plugin-sass`,
-    {
-      resolve: "gatsby-transformer-remark",
-      options: {
-        plugins: ["gatsby-remark-component-parent2div"],
-      },
-    },
+    // {
+    //   resolve: "gatsby-transformer-remark",
+    //   options: {
+    //     plugins: ["gatsby-remark-component-parent2div"],
+    //   },
+    // },
   ],
 }

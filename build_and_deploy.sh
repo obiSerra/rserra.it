@@ -2,7 +2,7 @@
 
 echo "[+] Start Build"
 
-npm run build
+npx gatsby build
 
 echo "[+] Start sync"
 cmd="aws s3 sync ./public s3://www.rserra.it/ --delete --exclude #*#"
