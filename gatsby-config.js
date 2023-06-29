@@ -12,13 +12,14 @@ module.exports = {
     title: `rserra.it`,
     author: {
       name: `Roberto Serra`,
-      summary: `Hi there! My name is Roberto and I am a Senior Software Engineer with over 15 years of experience.`,
+      summary: `Hi there! My name is Roberto and I am a Senior Software Engineer with nearly 15 years of experience.`,
     },
     description: `Just my page.`,
     siteUrl: `https://www.rserra.it/`,
     social: {
       github: `https://github.com/obiSerra`,
     },
+    cvUrl: "https://github.com/obiSerra/resume/blob/dfb9342afe65446832a8748e0eeac792b1e1470f/output/Roberto_Serra_CV.pdf"
   },
   plugins: [
     `gatsby-plugin-image`,

@@ -10,6 +10,23 @@ import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import CollapseNote from "./CollapseNote"
 
+const query = graphql`
+  query BioQuery {
+    site {
+      siteMetadata {
+        author {
+          name
+          summary
+        }
+        social {
+          github
+        }
+        cvUrl
+      }
+    }
+  }
+`
+
 const prompt = `
 Your task is to perform the following this steps:
 1. Read the text delimited by triple backticks (\`\`\`).
@@ -60,25 +77,11 @@ In my free time, I love exploring other interests such as 3d Printing, Soccer, C
 `
 
 const Bio = () => {
-  const data = useStaticQuery(graphql`
-    query BioQuery {
-      site {
-        siteMetadata {
-          author {
-            name
-            summary
-          }
-          social {
-            github
-          }
-        }
-      }
-    }
-  `)
+  const data = useStaticQuery(query)
 
   const author = data.site.siteMetadata?.author
   const social = data.site.siteMetadata?.social
-
+  const cvUrl = data.site.siteMetadata?.cvUrl
   return (
     <div className="bio">
       <StaticImage
@@ -128,8 +131,13 @@ const Bio = () => {
             rel="noreferrer"
           >
             github
+          </a>{" "}
+          or get my resume{" "}
+          <a href={cvUrl} title="resume" target="_blank" rel="noreferrer">
+            here
           </a>
         </p>
+
         <div>
           <br />
           <br />
@@ -150,21 +158,7 @@ const Bio = () => {
 }
 
 export const ShortBio = () => {
-  const data = useStaticQuery(graphql`
-    query BioQuery {
-      site {
-        siteMetadata {
-          author {
-            name
-            summary
-          }
-          social {
-            github
-          }
-        }
-      }
-    }
-  `)
+  const data = useStaticQuery(query)
   const summary = data.site.siteMetadata?.author?.summary
   return (
     <>
