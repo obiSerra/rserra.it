@@ -4,6 +4,8 @@ date: "2023-07-14"
 description: "Discovering and testing canvas optimization while preparing for the js13kgames 2023"
 ---
 
+<style> img {max-width: 600px}</style>
+
 ## Introduction
 
 Almost every year around July, I start preparing for the [js13kgames](https://js13kgames.com/), a game dev competition that requires creating an HTML5 game that compressed weight at most 13kb. There are many ad-hoc engines that allow the participants to focus on the game instead of everything else; the problem is, I find this "everything else" at least as interesting as working on the game itself, so every year I start working on a new engine from scratch, and 90% of the time I'm not able to finish my game in time...
@@ -54,8 +56,29 @@ const drawMush = (ctx, pos) => {
 }
 ```
 
-![not optimized](./not-optimized.gif)
-_note: the first second is freezed because of the video recorder and not the animation itself_
+As we can see the in following image, the rendering frame rate (_uFPS_) drops below 10 with 400 shapes
 
-after optimization
+![not optimized](./not-optimized.gif)
+
+The only optimization used in this case is to pre-render the shape inside a temporary canvas, get the content as an image and then render it to the final canvas using `ctx.drawImage`
+
+```ts
+export const preRender = (dim: IVec, renderFn: RenderFn) => {
+  const prC = document.createElement("canvas")
+  const [w, h] = dim
+  prC.width = w
+  prC.height = h
+  const ctx = prC.getContext("2d")
+  renderFn(ctx, [prC.width / 2, prC.height / 2])
+  const imgSrc = prC.toDataURL("image/png")
+  const img = document.createElement("img")
+  img.src = imgSrc
+  return img
+}
+```
+
 ![optimized](./optimized.gif)
+
+After this optimization, the rendering framerate remain around 60 FPS.
+
+**NOTE: this post is a work in progress, I'll add new tips and optmization as I found them**
