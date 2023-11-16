@@ -19,7 +19,8 @@ module.exports = {
     social: {
       github: `https://github.com/obiSerra`,
     },
-    cvUrl: "https://github.com/obiSerra/resume/blob/dfb9342afe65446832a8748e0eeac792b1e1470f/output/Roberto_Serra_CV.pdf"
+    cvUrl:
+      "https://github.com/obiSerra/resume/blob/dfb9342afe65446832a8748e0eeac792b1e1470f/output/Roberto_Serra_CV.pdf",
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -59,6 +60,7 @@ module.exports = {
           },
           `gatsby-remark-prismjs`,
           `gatsby-remark-component-parent2div`,
+          `gatsby-remark-gifs`,
         ],
       },
     },
