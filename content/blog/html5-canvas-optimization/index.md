@@ -80,5 +80,3 @@ export const preRender = (dim: IVec, renderFn: RenderFn) => {
 ![optimized](./optimized.gif)
 
 After this optimization, the rendering framerate remain around 60 FPS.
-
-**NOTE: this post is a work in progress, I'll add new tips and optmization as I found them**

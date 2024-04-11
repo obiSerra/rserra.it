@@ -18,9 +18,11 @@ module.exports = {
     siteUrl: `https://www.rserra.it/`,
     social: {
       github: `https://github.com/obiSerra`,
+      kaggle: `https://www.kaggle.com/oneobi`,
+      linkedin: `https://linkedin.com/in/obiserra/`,
     },
     cvUrl:
-      "https://github.com/obiSerra/resume/blob/dfb9342afe65446832a8748e0eeac792b1e1470f/output/Roberto_Serra_CV.pdf",
+      "https://github.com/obiSerra/resume/blob/f29cb52fddb6698f435a1775cec65c050d6d2b23/output/Roberto_Serra_CV.pdf?raw=true",
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -61,6 +63,63 @@ module.exports = {
           `gatsby-remark-prismjs`,
           `gatsby-remark-component-parent2div`,
           `gatsby-remark-gifs`,
+          {
+            resolve: "gatsby-plugin-iubenda-cookie-footer",
+            options: {
+              iubendaOptions: {
+                askConsentAtCookiePolicyUpdate: true,
+                enableFadp: true,
+                enableLgpd: true,
+                enableUspr: true,
+                fadpApplies: true,
+                floatingPreferencesButtonDisplay: "bottom-right",
+                lang: "en",
+                perPurposeConsent: true,
+                siteId: process.env.IUBENDA_SITE_ID,
+                usprApplies: true,
+                whitelabel: false,
+                cookiePolicyId: process.env.IUBENDA_COOKIE_POLICY_ID,
+                banner: {
+                  acceptButtonDisplay: true,
+                  closeButtonDisplay: false,
+                  customizeButtonDisplay: true,
+                  explicitWithdrawal: true,
+                  listPurposes: true,
+                  position: "float-top-center",
+                  rejectButtonDisplay: true,
+                },
+              },
+            },
+          },
+          {
+            resolve: `gatsby-plugin-google-gtag`,
+            options: {
+              // You can add multiple tracking ids and a pageview event will be fired for all of them.
+              trackingIds: [
+                process.env.GAKEY,
+              ],
+              // This object gets passed directly to the gtag config command
+              // This config will be shared across all trackingIds
+              gtagConfig: {
+              //   optimize_id: "OPT_CONTAINER_ID",
+                anonymize_ip: true,
+              //   cookie_expires: 0,
+              },
+              // This object is used for configuration specific to this plugin
+              pluginConfig: {
+                // Puts tracking script in the head instead of the body
+                head: false,
+                // Setting this parameter is also optional
+                respectDNT: true,
+                // Avoids sending pageview hits from custom paths
+                // exclude: ["/preview/**", "/do-not-track/me/too/"],
+                // Defaults to https://www.googletagmanager.com
+                // origin: "YOUR_SELF_HOSTED_ORIGIN",
+                // Delays processing pageview events on route update (in milliseconds)
+                delayOnRouteUpdate: 0,
+              },
+            },
+          },
         ],
       },
     },

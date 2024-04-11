@@ -20,6 +20,8 @@ const query = graphql`
         }
         social {
           github
+          kaggle
+          linkedin
         }
         cvUrl
       }
@@ -96,31 +98,52 @@ const Bio = () => {
       />
       <div>
         <p>
-          Hi there! My name is <strong>{author.name}</strong> and I am a Senior
-          Software Engineer with over 10 years of experience. <br />
-          Currently based in Turin, Italy, I am working at Etiqa SRL as Director
-          of Technology. <br />I am proficient in various programming languages
-          including <span className="highlight">Python</span>,{" "}
+          Hi there! My name is <strong>{author.name}</strong>, and I am a Senior
+          Software Engineer with 15 years of experience.
+        </p>
+        <p>
+          Currently based in Turin, Italy, I work at Etiqa SRL as Director of
+          Technology.
+        </p>
+
+        <p>
+          I am proficient in various programming languages, including{" "}
+          <span className="highlight">Python</span>,{" "}
           <span className="highlight">JavaScript/TypeScript</span>,{" "}
           <span className="highlight">Clojure</span>,{" "}
           <span className="highlight">C#</span>,{" "}
-          <span className="highlight">CSS + HTML</span>,{" "}
-          <span className="highlight">AWS services</span>, and{" "}
-          <span className="highlight">React</span>.
-          <br />I have a keen interest in Machine Learning, particularly{" "}
-          <span className="highlight">Reinforcement Learning</span>,{" "}
-          <span className="highlight">LLM</span> and{" "}
-          <span className="highlight">GAN</span>, as well as in{" "}
-          <span className="highlight">Game Development</span> and{" "}
-          <span className="highlight">Computer Science</span>. <br />
-          My interests also extend to Physical Computing, where I enjoy working
-          with <span className="highlight">Arduino</span> and{" "}
-          <span className="highlight">RaspberryPi</span>. <br />
-          In my free time, I love exploring other interests such as{" "}
-          <span className="highlight">3d Printing</span>,
-          <span className="highlight">Soccer</span>,{" "}
-          <span className="highlight">Cooking and food</span>. **
+          <span className="highlight">CSS + HTML</span>; I also have excellent
+          experience with <span className="highlight">AWS services</span>,{" "}
+          <span className="highlight">Docker</span>,{" "}
+          <span className="highlight">React/Redux</span>, to mention a few.
         </p>
+        <p>
+          I am keenly interested in <span className="highlight"></span>Machine
+          Learning, particularly{" "}
+          <span className="highlight">Reinforcement Learning</span>,{" "}
+          <span className="highlight">LLMs</span>, and{" "}
+          <span className="highlight">Data Analysis</span>; some of my
+          experiments and side projects are here, on my{" "}
+          <a
+            href={social.github}
+            title="github"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>{" "}
+          and{" "}
+          <a
+            href={social.kaggle}
+            title="github"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Kaggle
+          </a>{" "}
+          pages.
+        </p>
+
         <br />
         <p>
           You can find me on:{" "}
@@ -130,28 +153,22 @@ const Bio = () => {
             target="_blank"
             rel="noreferrer"
           >
-            github
+            GitHub
+          </a>
+          ,{" "}
+          <a
+            href={social.linkedin}
+            title="linkedin"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Linkedin
           </a>{" "}
-          or get my resume{" "}
+          or download my resume{" "}
           <a href={cvUrl} title="resume" target="_blank" rel="noreferrer">
             here
           </a>
         </p>
-
-        <div>
-          <br />
-          <br />
-          <small>
-            ** Base description generated with <i>gpt-3.5-turbo</i> and a little
-            bit of prompt engineering (chain-of-thoughts and some retries).
-          </small>
-          <CollapseNote open="full prompt" close="close prompt">
-            <strong>Prompt</strong>
-            <pre>{prompt}</pre>
-            <strong>Completion</strong>
-            <pre>{completion}</pre>
-          </CollapseNote>
-        </div>
       </div>
     </div>
   )
