@@ -68,16 +68,6 @@ Intrestes:
         - Cooking and food    
 \`\`\`
 `
-const completion = `
-Self-Presentation:
-Hi there! My name is Roberto and I am a Senior Software Engineer with over 10 years of experience. 
-Currently based in Turin, Italy, I am working at Etiqa SRL as Director of Technology. 
-I am proficient in various programming languages including Python, JavaScript/TypeScript, Clojure, C#, CSS + HTML and AWS services. 
-I have a keen interest in Machine Learning, particularly Reinforcement Learning, LLM and GAN, as well as in Game Development and Computer Science. 
-My interests also extend to Physical Computing, where I enjoy working with Arduino and RaspberryPi. 
-In my free time, I love exploring other interests such as 3d Printing, Soccer, Cooking and food.
-`
-
 const Bio = () => {
   const data = useStaticQuery(query)
 
@@ -99,11 +89,10 @@ const Bio = () => {
       <div>
         <p>
           Hi there! My name is <strong>{author.name}</strong>, and I am a Senior
-          Software Engineer with 15 years of experience.
+          Software Engineer with more than 15 years of experience.
         </p>
         <p>
-          Currently based in Turin, Italy, I work at Etiqa SRL as Director of
-          Technology.
+          I live in Turin, Italy, I work at WaterView SRL as MLOps and Developer; designing, building and maintaining the systems that enables our computer vision models to work effectively.
         </p>
 
         <p>
