@@ -12,7 +12,7 @@ module.exports = {
     title: `rserra.it`,
     author: {
       name: `Roberto Serra`,
-      summary: `Hi there! My name is Roberto and I am a Senior Software Engineer with nearly 15 years of experience.`,
+      summary: `Hi there! My name is Roberto and I am a Senior Software Engineer with more than 15 years of experience.`,
     },
     description: `Just my page.`,
     siteUrl: `https://www.rserra.it/`,
@@ -91,35 +91,35 @@ module.exports = {
               },
             },
           },
-          {
-            resolve: `gatsby-plugin-google-gtag`,
-            options: {
-              // You can add multiple tracking ids and a pageview event will be fired for all of them.
-              trackingIds: [
-                process.env.GAKEY,
-              ],
-              // This object gets passed directly to the gtag config command
-              // This config will be shared across all trackingIds
-              gtagConfig: {
-              //   optimize_id: "OPT_CONTAINER_ID",
-                anonymize_ip: true,
-              //   cookie_expires: 0,
-              },
-              // This object is used for configuration specific to this plugin
-              pluginConfig: {
-                // Puts tracking script in the head instead of the body
-                head: false,
-                // Setting this parameter is also optional
-                respectDNT: true,
-                // Avoids sending pageview hits from custom paths
-                // exclude: ["/preview/**", "/do-not-track/me/too/"],
-                // Defaults to https://www.googletagmanager.com
-                // origin: "YOUR_SELF_HOSTED_ORIGIN",
-                // Delays processing pageview events on route update (in milliseconds)
-                delayOnRouteUpdate: 0,
-              },
-            },
-          },
+          // {
+          //   resolve: `gatsby-plugin-google-gtag`,
+          //   options: {
+          //     // You can add multiple tracking ids and a pageview event will be fired for all of them.
+          //     trackingIds: [
+          //       process.env.GAKEY,
+          //     ],
+          //     // This object gets passed directly to the gtag config command
+          //     // This config will be shared across all trackingIds
+          //     gtagConfig: {
+          //     //   optimize_id: "OPT_CONTAINER_ID",
+          //       anonymize_ip: true,
+          //     //   cookie_expires: 0,
+          //     },
+          //     // This object is used for configuration specific to this plugin
+          //     pluginConfig: {
+          //       // Puts tracking script in the head instead of the body
+          //       head: false,
+          //       // Setting this parameter is also optional
+          //       respectDNT: true,
+          //       // Avoids sending pageview hits from custom paths
+          //       // exclude: ["/preview/**", "/do-not-track/me/too/"],
+          //       // Defaults to https://www.googletagmanager.com
+          //       // origin: "YOUR_SELF_HOSTED_ORIGIN",
+          //       // Delays processing pageview events on route update (in milliseconds)
+          //       delayOnRouteUpdate: 0,
+          //     },
+          //   },
+          // },
         ],
       },
     },
